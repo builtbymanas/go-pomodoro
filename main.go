@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"time"
 )
 
@@ -37,4 +38,11 @@ func startTimer(seconds int) {
 		time.Sleep(1 * time.Second)
 	}
 	fmt.Println("\n✅ Timer Finished!")
+
+	triggerFunction()
+}
+
+func triggerFunction() {
+	cmd := exec.Command("notify-send", "Pomodoro Timer", "Session Complete! Take a break.")
+	_ = cmd.Run()
 }
