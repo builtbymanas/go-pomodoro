@@ -2,12 +2,29 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 )
 
 func main() {
-	fmt.Println("Pomodoro Timer Started...")
-	startTimer(3725)
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run main.go <duration>")
+		fmt.Println("Example: go run main.go 25m")
+		fmt.Println("Example: go run main.go 1h30m")
+		return
+	}
+
+	input := os.Args[1]
+	duration, err := time.ParseDuration(input)
+
+	if err != nil {
+		fmt.Printf("Error: Could not understand time '%s'.\n", input)
+		fmt.Println("Please use formats like: 10s, 5m, 1h30m")
+		return
+	}
+
+	fmt.Printf("🍅 Pomodoro Timer Started for %s...\n", duration)
+	startTimer(int(duration.Seconds()))
 }
 
 func startTimer(seconds int) {
@@ -17,8 +34,7 @@ func startTimer(seconds int) {
 		s := i % 60
 
 		fmt.Printf("\r⏳ Time Remaining: %02d:%02d:%02d   ", h, m, s)
-
 		time.Sleep(1 * time.Second)
 	}
-	fmt.Println("\nTimer Finished!")
+	fmt.Println("\n✅ Timer Finished!")
 }
