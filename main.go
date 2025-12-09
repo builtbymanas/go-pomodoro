@@ -29,7 +29,7 @@ func main() {
 }
 
 func startTimer(seconds int) {
-	for i := seconds; i > 0; i-- {
+	for i := seconds; i >= 0; i-- {
 		h := i / 3600
 		m := (i % 3600) / 60
 		s := i % 60
@@ -43,6 +43,9 @@ func startTimer(seconds int) {
 }
 
 func triggerFunction() {
-	cmd := exec.Command("notify-send", "Pomodoro Timer", "Session Complete! Take a break.")
-	_ = cmd.Run()
+	cmdNotify := exec.Command("notify-send", "Pomodoro Timer", "Session Complete!")
+	_ = cmdNotify.Run()
+
+	cmdSound := exec.Command("paplay", "/usr/share/sounds/freedesktop/stereo/complete.oga")
+	_ = cmdSound.Run()
 }
