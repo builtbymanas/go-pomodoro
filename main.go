@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+//go:embed sounds/session_work.wav sounds/session_break.wav
 var soundFS embed.FS
 
 func main() {
